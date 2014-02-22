@@ -8,9 +8,9 @@ void func(char skip_size, char bytes_back, char debug)
 {
 	char buffer1[5];
 	char buffer2[10];
-	size_t *return_addr;
+	char *return_addr;
 
-	return_addr = (size_t *) ((char *)(buffer1 + bytes_back));
+	return_addr = buffer1 + bytes_back;
 	if (debug) {
 		printf("buffer1: %p\n", (void *)buffer1);
 		printf("buffer2: %p\n", (void *)buffer2);
@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
 	char debug;
 
 	debug = (argc > 3) ? atoi(argv[3]) : 0;
-	skip_size = (argc > 2) ? atoi(argv[2]) : 2;
+	skip_size = (argc > 2) ? atoi(argv[2]) : 8;
 	bytes_back = (argc > 1) ? atoi(argv[1]) : 21;
 
 	if (debug) {
