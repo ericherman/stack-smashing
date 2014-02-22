@@ -2,6 +2,7 @@
 /* see: http://insecure.org/stf/smashstack.html */
 
 #include <stdio.h>
+#include <stdlib.h>
 
 void func(char skip_size, char bytes_back, char debug)
 {
@@ -24,29 +25,31 @@ int main(int argc, char *argv[])
 	int x;
 	char skip_size;
 	char bytes_back;
-	int debug;
-	debug = (argc > 1) ? 1 : 0;
-	if (debug) {
-		printf("treating %s as debug\n", argv[1]);
-	}
+	char debug;
 
-	skip_size = 8;
-	bytes_back = 20;
+	debug = (argc > 3) ? atoi(argv[3]) : 0;
+	skip_size = (argc > 2) ? atoi(argv[2]) : 2;
+	bytes_back = (argc > 1) ? atoi(argv[1]) : 21;
 
 	if (debug) {
 		printf("skip_size=%d\n", skip_size);
+		printf("bytes_back=%d\n", bytes_back);
 	}
+
 	x = 0;
 	func(skip_size, bytes_back, debug);
 	x = 1;
+
 	if (debug) {
 		printf("x == %d\n", x);
 	}
 	if (x == 0) {
+		printf("skip_size=%d\n", skip_size);
+		printf("bytes_back=%d\n", bytes_back);
 		printf("skipped assignment to x!\n");
 		return 0;
 	}
 
-	printf("Cound not skip assignment to 'x'\n");
+	printf("did not skip assignment to 'x'\n");
 	return 1;
 }
