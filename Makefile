@@ -30,7 +30,7 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CC) -c $(CFLAGS) $^ -o $@
 
 clean:
-	rm -rf *.o *.c.s $(EXECUTABLE)
+	rm -rf *.o *.c.s $(EXECUTABLE) example3 c-shellcode
 
 INPUT_4=ABCD
 INPUT_66=ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxzy-1234567890+=
@@ -44,3 +44,9 @@ EXAMPLE3_OBJS=$(EXAMPLE3_SOURCES:.c=.o)
 example3: $(EXAMPLE3_OBJS)
 	$(CC) $(EXAMPLE3_OBJS) -o $@ $(LDFLAGS)
 	./example3
+
+c-shellcode:
+	$(CC) -S -fPIC $(CFLAGS) $@.c -o $@.c.s
+	$(CC) -c -fPIC $(CFLAGS) $@.c -o $@.o
+	$(CC) -static $@.o -o $@ $(LDFLAGS)
+	./c-shellcode
