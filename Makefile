@@ -33,7 +33,8 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CC) -c $(CFLAGS) $^ -o $@
 
 clean:
-	rm -rf *.o *.c.s $(EXECUTABLE) example3 c-shellcode shellcode
+	rm -rf *.o *.c.s $(EXECUTABLE) example3 c-shellcode shellcode \
+		shellcode.o.objdump test-shellcode
 
 INPUT_4=ABCD
 INPUT_66=ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxzy-1234567890+=
@@ -56,5 +57,12 @@ c-shellcode:
 
 shellcode:
 	$(AS) shellcode.s -o shellcode.o
+	objdump -D shellcode.o > shellcode.o.objdump
 	$(LD) shellcode.o -o shellcode
 	./shellcode
+
+TEST_SHELLCODE_SOURCES=test-shellcode.c
+TEST_SHELLCODE_OBJS=$(TEST_SHELLCODE_SOURCES:.c=.o)
+test-shellcode: $(TEST_SHELLCODE_OBJS)
+	$(CC) $(TEST_SHELLCODE_OBJS) -o $@ $(LDFLAGS)
+	./test-shellcode
