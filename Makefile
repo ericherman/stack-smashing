@@ -46,7 +46,7 @@ example3: $(EXAMPLE3_OBJS)
 	./example3
 
 c-shellcode:
-	$(CC) -S -fPIC $(CFLAGS) $@.c -o $@.c.s
-	$(CC) -c -fPIC $(CFLAGS) $@.c -o $@.o
+	$(CC) -S -fPIC $(CFLAGS) -Wno-multichar $@.c -o $@.c.s
+	$(CC) -c -fPIC $(CFLAGS) -Wno-multichar $@.c -o $@.o
 	$(CC) -static $@.o -o $@ $(LDFLAGS)
 	./c-shellcode
