@@ -10,6 +10,9 @@ DANGER_CFLAGS=-fno-stack-protector
 DANGER_LFLAGS=-zexecstack
 
 CC=gcc
+AS=as
+LD=ld
+
 STD_CFLAGS=--std=c89
 NOISY_CFLAGS=-Werror -Wall -Wextra -pedantic
 OPTIMIZER_CFLAGS=-ggdb -O0
@@ -30,7 +33,7 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CC) -c $(CFLAGS) $^ -o $@
 
 clean:
-	rm -rf *.o *.c.s $(EXECUTABLE) example3 c-shellcode
+	rm -rf *.o *.c.s $(EXECUTABLE) example3 c-shellcode shellcode
 
 INPUT_4=ABCD
 INPUT_66=ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxzy-1234567890+=
@@ -50,3 +53,8 @@ c-shellcode:
 	$(CC) -c -fPIC $(CFLAGS) -Wno-multichar $@.c -o $@.o
 	$(CC) -static $@.o -o $@ $(LDFLAGS)
 	./c-shellcode
+
+shellcode:
+	$(AS) shellcode.s -o shellcode.o
+	$(LD) shellcode.o -o shellcode
+	./shellcode
