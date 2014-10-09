@@ -13,7 +13,7 @@ CC=gcc
 AS=as
 LD=ld
 
-STD_CFLAGS=--std=c89
+STD_CFLAGS=-std=c89
 NOISY_CFLAGS=-Werror -Wall -Wextra -pedantic
 OPTIMIZER_CFLAGS=-ggdb -O0
 
