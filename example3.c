@@ -28,6 +28,9 @@ void func(char skip_size, char bytes_back, char debug)
 		printf("\tbytes_back=%d,skip_size=%d\n", bytes_back, skip_size);
 	}
 	(*return_addr) += skip_size;
+	if (debug) {
+		printf("return addr now is %p\n", (void *)return_addr);
+	}
 }
 
 int main(int argc, char *argv[])
