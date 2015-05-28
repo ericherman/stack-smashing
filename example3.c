@@ -4,6 +4,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#if __GNUC__
+  #if __x86_64__ || __ppc64__
+    #define DEFAULT_SKIP_SIZE 1
+    #define DEFAULT_BYTES_BACK 24
+  #else
+    #define DEFAULT_SKIP_SIZE 8
+    #define DEFAULT_BYTES_BACK 21
+  #endif
+#endif
+
 void func(char skip_size, char bytes_back, char debug)
 {
 	char buffer1[5];
@@ -28,8 +38,8 @@ int main(int argc, char *argv[])
 	char debug;
 
 	debug = (argc > 3) ? atoi(argv[3]) : 0;
-	skip_size = (argc > 2) ? atoi(argv[2]) : 8;
-	bytes_back = (argc > 1) ? atoi(argv[1]) : 21;
+	skip_size = (argc > 2) ? atoi(argv[2]) : DEFAULT_SKIP_SIZE;
+	bytes_back = (argc > 1) ? atoi(argv[1]) : DEFAULT_BYTES_BACK;
 
 	if (debug) {
 		printf("skip_size=%d\n", skip_size);
