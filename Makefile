@@ -34,7 +34,7 @@ $(EXECUTABLE): $(OBJECTS)
 
 clean:
 	rm -rf *.o *.c.s $(EXECUTABLE) example3 c-shellcode shellcode \
-		shellcode.o.objdump test-shellcode
+		vulnerable shellcode.o.objdump test-shellcode
 
 INPUT_4=ABCD
 INPUT_66=ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxzy-1234567890+=
@@ -60,6 +60,11 @@ shellcode:
 	objdump -D shellcode.o > shellcode.o.objdump
 	$(LD) shellcode.o -o shellcode
 	./shellcode
+
+vulnerable:
+	$(CC) -S -fPIC $(CFLAGS) $@.c -o $@.c.s
+	$(CC) -c -fPIC $(CFLAGS) $@.c -o $@.o
+	$(CC) -static $@.o -o $@ $(LDFLAGS)
 
 TEST_SHELLCODE_SOURCES=test-shellcode.c
 TEST_SHELLCODE_OBJS=$(TEST_SHELLCODE_SOURCES:.c=.o)
