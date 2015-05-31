@@ -41,7 +41,7 @@ INPUT_66=ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxzy-1234567890+=
 
 check: $(EXECUTABLE)
 	./$(EXECUTABLE) $(INPUT_4)
-	./$(EXECUTABLE) $(INPUT_66)
+	echo "to smash the stack (and segfault): ./$(EXECUTABLE) $(INPUT_66)"
 
 EXAMPLE3_SOURCES=example3.c
 EXAMPLE3_OBJS=$(EXAMPLE3_SOURCES:.c=.o)
