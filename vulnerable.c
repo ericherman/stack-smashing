@@ -19,7 +19,7 @@ size_t strnlen(const char *str, size_t buf_size)
 }
 #endif
 
-void gets_and_chomp(char *buf, size_t len)
+void fgets_and_chomp(char *buf, size_t len)
 {
 	size_t strlen;
 
@@ -37,7 +37,7 @@ char vulnerable(void)
 	char buf[BUFSIZE];	/* SHORT BUF */
 
 	printf("What is your name? ");
-	gets_and_chomp(buf, BUFSIZE1);	/* LONG BUF */
+	fgets_and_chomp(buf, BUFSIZE1);	/* LONG BUF */
 	printf("Hello, %s!\n", buf);
         return buf[0];
 }

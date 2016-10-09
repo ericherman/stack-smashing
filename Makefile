@@ -23,7 +23,7 @@ LDFLAGS=$(DANGER_LFLAGS)
 
 OBJECTS=$(SOURCES:.c=.o)
 
-all: $(SOURCES) $(EXECUTABLE)
+all: $(SOURCES) $(EXECUTABLE) shellcode c-shellcode vulnerable
 
 $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(OBJECTS) -o $@ $(LDFLAGS)
@@ -53,13 +53,13 @@ c-shellcode:
 	$(CC) -S -fPIC $(CFLAGS) -Wno-multichar $@.c -o $@.c.s
 	$(CC) -c -fPIC $(CFLAGS) -Wno-multichar $@.c -o $@.o
 	$(CC) -static $@.o -o $@ $(LDFLAGS)
-	./c-shellcode
+	./$@
 
 shellcode:
-	$(AS) shellcode.s -o shellcode.o
-	objdump -D shellcode.o > shellcode.o.objdump
-	$(LD) shellcode.o -o shellcode
-	./shellcode
+	$(AS) $@.s -o $@.o
+	objdump -D $@.o > $@.o.objdump
+	$(LD) $@.o -o $@
+	./$@
 
 vulnerable:
 	$(CC) -S -fPIC $(CFLAGS) $@.c -o $@.c.s
