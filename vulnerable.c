@@ -25,7 +25,7 @@ void fgets_and_chomp(char *buf, size_t len)
 
 	if (fgets(buf, len, stdin)) {
 		strlen = strnlen(buf, len);
-		fprintf(stderr, "%0x\n", (unsigned int) buf);
+		fprintf(stderr, "%0x\n", (unsigned int)buf);
 		if (strlen) {
 			buf[strlen - 1] = '\0';
 		}
@@ -39,12 +39,12 @@ char vulnerable(void)
 	printf("What is your name? ");
 	fgets_and_chomp(buf, BUFSIZE1);	/* LONG BUF */
 	printf("Hello, %s!\n", buf);
-        return buf[0];
+	return buf[0];
 }
 
 int main(void)
 {
 	char buf1[BUFSIZE1];
-	buf1[BUFSIZE1-1] = vulnerable();
-	return buf1[BUFSIZE1-1] != 0;
+	buf1[BUFSIZE1 - 1] = vulnerable();
+	return buf1[BUFSIZE1 - 1] != 0;
 }
